@@ -18,6 +18,7 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
 
   # --- THIS IS THE PATCH WE NEEDED ---
   ignoreDifferences:

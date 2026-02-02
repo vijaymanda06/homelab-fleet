@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-sysctl-tuner
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: sysctl-tuner
+  template:
+    metadata:
+      labels:
+        app: sysctl-tuner
+    spec:
+      # This allows the pod to modify the host's kernel
+      hostPID: true
+      hostNetwork: true
+      containers:
+      - name: sysctl-tuner
+        image: busybox
+        securityContext:
+          privileged: true
+        command:
+        - "sh"
+        - "-c"
+        - |
+          # Apply the limits to the host
+          sysctl -w fs.inotify.max_user_instances=8192
+          sysctl -w fs.inotify.max_user_watches=524288
+          # Keep the pod alive so the DaemonSet stays 'Healthy'
+          sleep infinity

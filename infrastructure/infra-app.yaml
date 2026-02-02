@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infrastructure-layer
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vijaymanda06/homelab-fleet.git
+    targetRevision: HEAD
+    path: infrastructure  # <-- Points to the root infrastructure folder
+    directory:
+      recurse: false # We only want the top-level files (Apps & Rules) first
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd # Apps usually live in argocd namespace, resources will go to their own ns defined in manifests
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

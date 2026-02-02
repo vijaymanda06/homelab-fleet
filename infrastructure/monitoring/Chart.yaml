@@ -1,0 +1,8 @@
+apiVersion: v2
+kind: Chart
+name: monitoring-wrapper
+version: 1.0.0
+dependencies:
+  - name: kube-prometheus-stack
+    version: 61.3.2  # Latest stable version as of 2024/25
+    repository: https://prometheus-community.github.io/helm-charts

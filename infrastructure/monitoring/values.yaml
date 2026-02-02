@@ -1,0 +1,39 @@
+kube-prometheus-stack:
+  # --- DISABLE THE TROUBLEMAKER ---
+  prometheusOperator:
+    admissionWebhooks:
+      enabled: false
+      patch:
+        enabled: false
+  
+  # --- PRODUCTION CONFIG ---
+  grafana:
+    adminPassword: "admin"
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - grafana.home
+      annotations:
+        cert-manager.io/cluster-issuer: "selfsigned-issuer"
+    persistence:
+      enabled: true
+      storageClassName: longhorn
+      size: 10Gi
+
+  prometheus:
+    prometheusSpec:
+      retention: 10d
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: longhorn
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 20Gi
+
+  defaultRules:
+    create: true
+  alertmanager:
+    enabled: true

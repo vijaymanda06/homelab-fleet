@@ -1,0 +1,22 @@
+---
+- name: Deploy Nginx via SSM
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Create custom index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <html>
+          <head><title>Zero Trust Setup</title></head>
+          <body>
+          <h1>Hello from SSM</h1>
+          <p>Deployed via Ansible without SSH!</p>
+          </body>
+          </html>

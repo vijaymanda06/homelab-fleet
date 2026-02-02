@@ -1,0 +1,22 @@
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx-demo
+  namespace: awx
+spec:
+  service_type: ClusterIP
+  
+  postgres_storage_class: longhorn
+  postgres_storage_requirements:
+    requests:
+      storage: 8Gi
+
+  ingress_type: ingress
+  ingress_class_name: nginx        # FIXED: Added underscores
+  
+  # FIXED: Converted from Map to String Block using "|"
+  ingress_annotations: |
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+
+  hostname: awx.home
+  ingress_tls_secret: awx-secret-tls

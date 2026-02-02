@@ -1,0 +1,8 @@
+apiVersion: v2
+kind: Chart
+name: awx-operator-wrapper
+version: 1.0.0
+dependencies:
+  - name: awx-operator
+    version: 2.12.2  # Pinned stable version
+    repository: https://ansible-community.github.io/awx-operator-helm/

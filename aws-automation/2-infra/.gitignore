@@ -1,7 +1,0 @@
-# Ignore Terraform Binary Plugins (The 700MB file)
-.terraform/
-.terraform.lock.hcl
-
-# Ignore State Files (Contains Sensitive Data!)
-*.tfstate
-*.tfstate.backup
